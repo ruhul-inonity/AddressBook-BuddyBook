@@ -8,6 +8,16 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
 
+
+    <string name="drawer_menu1">All Contacts</string>
+    <string name="drawer_menu2">Contacts In Activity</string>
+    <string name="drawer_menu3">Item 3</string>
+    <string name="drawer_menu4">Item 4</string>
+    <string name="drawer_menu5">Sync SocialSite Contacts</string>
+    <string name="drawer_menu6">Item 6</string>
+
+
+
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
@@ -21,4 +31,7 @@
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+=======
+    <string name="title_activity_view_details">Details</string>
+>>>>>>> a049033d6e48c240e9cc744a9b0f432583121a7e
 </resources>

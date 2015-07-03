@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.inonity.buddybook"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -25,4 +25,5 @@ dependencies {
     compile 'it.neokree:MaterialTabs:0.11'
     compile 'com.android.support:design:22.2.0'
     compile 'com.android.support:support-v4:22.2.0'
+    compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 }

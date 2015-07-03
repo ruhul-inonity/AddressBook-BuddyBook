@@ -19,8 +19,8 @@ public class ContactAdapter extends ArrayAdapter<ContactHelper> {
     private final Context context;
     private List<ContactHelper> items;
 
-    public ContactAdapter(Context context, int resource, List<ContactHelper> items) {
-        super(context, resource, items);
+    public ContactAdapter(Context context, List<ContactHelper> items) {
+        super(context, R.layout.custom_layout_name_pic_display, items);
         this.context = context;
         this.items = items;
     }
@@ -33,7 +33,7 @@ public class ContactAdapter extends ArrayAdapter<ContactHelper> {
         TextView textView = (TextView) view.findViewById(R.id.textViewContactName);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageViewContactImage);
         textView.setText(items.get(position).getName());
-        imageView.setImageResource(R.drawable.contact);
+        imageView.setImageResource(R.drawable.contact_temp);
 
         return view;
     }
