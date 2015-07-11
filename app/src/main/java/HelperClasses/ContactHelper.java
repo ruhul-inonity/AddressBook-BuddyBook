@@ -11,8 +11,13 @@ public class ContactHelper {
     private int id;
     private String name;
     private String email;
+    private String image;
     private String company;
     private ArrayList<String> phone;
+    private ArrayList<String> phoneTypes;
+    private ArrayList<String> emails;
+    private ArrayList<String> emailTypes;
+
     private String address;
     private String street;
     private String poBox;
@@ -21,8 +26,8 @@ public class ContactHelper {
     private String state;
     private String zipCode;
     private String note;
+    private String date;
     private String groups;
-
 
     public int getId() {
         return id;
@@ -36,6 +41,14 @@ public class ContactHelper {
         return name;
     }
 
+    public ArrayList<String> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(ArrayList<String> emails) {
+        this.emails = emails;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -44,8 +57,24 @@ public class ContactHelper {
         return email;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public String getCompany() {
@@ -134,5 +163,21 @@ public class ContactHelper {
 
     public void setGroups(String groups) {
         this.groups = groups;
+    }
+
+    public ArrayList<String> getPhoneTypes() {
+        return phoneTypes;
+    }
+
+    public void setPhoneTypes(ArrayList<String> phoneTypes) {
+        this.phoneTypes = phoneTypes;
+    }
+
+    public ArrayList<String> getEmailTypes() {
+        return emailTypes;
+    }
+
+    public void setEmailTypes(ArrayList<String> emailTypes) {
+        this.emailTypes = emailTypes;
     }
 }

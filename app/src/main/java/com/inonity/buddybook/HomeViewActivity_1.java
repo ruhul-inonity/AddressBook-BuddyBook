@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -27,7 +28,7 @@ import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 
 import CustomAdapter.TabsPagerAdapter;
 import Fragments.ContactsFragment;
-import HelperClasses.SocialSiteContacts;
+import Fragments.SearchFragment;
 
 
 public class HomeViewActivity_1 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -35,9 +36,9 @@ public class HomeViewActivity_1 extends AppCompatActivity implements NavigationV
     private static final String SELECTED_ITEM_ID = "selected_item_id";
     private static final String FIRST_TIME = "first_time";
     private Toolbar mToolbar;
-    private TabLayout swipeTabLayout;
     private NavigationView mDrawer;
     private DrawerLayout mDrawerLayout;
+    private TabLayout swipeTabLayout;
     private ViewPager mPager;
     private TabsPagerAdapter tabsAdapter;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -101,45 +102,53 @@ public class HomeViewActivity_1 extends AppCompatActivity implements NavigationV
                 .build();
 
         ImageView iconItem1 = new ImageView(this);
-        iconItem1.setImageResource(R.drawable.ic_add_black);
+
+        iconItem1.setImageResource(R.drawable.ic_action_add_person);
         ImageView iconItem2 = new ImageView(this);
-        iconItem2.setImageResource(R.drawable.ic_add_black);
+        iconItem2.setImageResource(R.drawable.ic_action_search);
         ImageView iconItem3 = new ImageView(this);
-        iconItem3.setImageResource(R.drawable.ic_add_black);
+        iconItem3.setImageResource(R.drawable.icon_settings);
 
         SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
 
-        SubActionButton buttonItem1 = itemBuilder.setContentView(iconItem1).build();
-        SubActionButton buttonItem2 = itemBuilder.setContentView(iconItem2).build();
-        SubActionButton buttonItem3 = itemBuilder.setContentView(iconItem3).build();
+        SubActionButton buttonAddNewContact = itemBuilder.setContentView(iconItem1).build();
+        SubActionButton buttonSearch = itemBuilder.setContentView(iconItem2).build();
+        SubActionButton buttonAddNewGroup = itemBuilder.setContentView(iconItem3).build();
 
 
         FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
 
-                .addSubActionView(buttonItem1)
-                .addSubActionView(buttonItem2)
-                .addSubActionView(buttonItem3)
+                .addSubActionView(buttonAddNewContact)
+                .addSubActionView(buttonSearch)
+                .addSubActionView(buttonAddNewGroup)
                 .attachTo(actionButton)
                 .build();
 
-        buttonItem1.setOnClickListener(new View.OnClickListener() {
+        buttonAddNewContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Item 1 Clicked", Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getApplicationContext(), "Item 1 Clicked", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(HomeViewActivity_1.this,AddNewContactActivity.class);
+                startActivity(intent);
 
             }
         });
-        buttonItem2.setOnClickListener(new View.OnClickListener() {
+        buttonSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Item 2 Clicked",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Item 2 Clicked", Toast.LENGTH_LONG).show();
+                FragmentManager fm=getSupportFragmentManager();
+                FragmentTransaction ft=fm.beginTransaction();
+                SearchFragment myFragment=new SearchFragment();
+                ft.add(R.id.myFragment,myFragment);
+                ft.commit();
 
             }
         });
-        buttonItem3.setOnClickListener(new View.OnClickListener() {
+        buttonAddNewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Item 3 Clicked",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -187,17 +196,14 @@ public class HomeViewActivity_1 extends AppCompatActivity implements NavigationV
                     .commit();
 
         }
+        else if (mSelectedId == R.id.navigation_item_2) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
+            intent = new Intent(this, AddNewContactActivity.class);
+            startActivity(intent);
+        }
 
-        if (mSelectedId == R.id.navigation_item_2) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            intent = new Intent(this, ContactListActivity.class);
-            startActivity(intent);
-        }
-        if (mSelectedId == R.id.navigation_item_5) {
-            mDrawerLayout.closeDrawer(GravityCompat.START);
-            intent = new Intent(this, SocialSiteContacts.class);
-            startActivity(intent);
-        }
+
+
 
     }
     private boolean didUserSeeDrawer() {

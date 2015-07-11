@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -87,15 +88,18 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
         objContact = new ContactHelper();
         String phoneNumber, image_uri = null;
+        Bitmap image = null;
         if (phones.getCount() > 0) {
             while (phones.moveToNext()) {
                 String id = phones.getString(phones.getColumnIndex(ContactsContract.Contacts._ID));
                 String name = phones.getString(phones.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-
                 image_uri = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
+
                 if (Integer.parseInt(phones.getString(phones.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
                     objContact = new ContactHelper();
                     objContact.setName(name);
+                    objContact.setImage(image_uri);
+
 
                     Cursor pCur = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", new String[]{id}, null);
@@ -105,7 +109,7 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
                     }
                     pCur.close();
-                    Log.i("Name and phone", name + " " + phoneNo.toString());
+                    Log.i("Name and phone", name + " " + phoneNo.toString() + image_uri);
                     objContact.setPhone(phoneNo);
                     db.addDetail(objContact);
                     phoneNo.clear();
@@ -123,11 +127,11 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
     private void showDataFromDatabase() {
 
         listView.setOnItemClickListener(this);
-        list = (ArrayList<ContactHelper>) db.getAllData();
+        list = db.getAllData();
         print(list);
 
 
-        if (null != list && list.size() != 0) {
+        if ( list != null && list.size() != 0) {
             Collections.sort(list, new Comparator<ContactHelper>() {
 
                 @Override
@@ -160,13 +164,32 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onItemClick(AdapterView<?> listview, View v, int position, long id) {
+        ContactHelper contact = list.get(position);
+
         Intent i = new Intent(getActivity(), ViewDetailsActivity.class);
 
-        Log.i("TEST", list.get(position).getName());
+        i.putExtra("id",contact.getId());
 
+        i.putExtra("Name", contact.getName());
+        i.putExtra("Image", contact.getImage());
+        i.putExtra("Phone Numbers", contact.getPhone());
+        String address = contact.getCity() + " " +
+                contact.getState() + " " +
+                contact.getStreet() + " " +
+                contact.getPoBox() + " " +
+                contact.getZipCode();
+        i.putExtra("Address", address);
 
-        i.putExtra("Name", list.get(position).getName());
-        i.putExtra("Phone Numbers", list.get(position).getPhone());
+        /*String address = (contact.getCity() != null) ? contact.getCity() : null + " ";
+        address += (contact.getState() != null) ? contact.getState() : null + " ";
+        address += (contact.getStreet() != null) ? contact.getStreet() : null + " ";
+        address += (contact.getPoBox() != null) ? contact.getPoBox() : null + " ";
+        address += (contact.getZipCode() != null) ? contact.getZipCode() : null;
+        i.putExtra("Address", address);*/
+
+        i.putExtra("Note", contact.getNote());
+
+        i.putExtra("Email", contact.getEmails());
         startActivity(i);
 
         //showCallDialog(list.get(position).getName(), list.get(position).getPhone());
@@ -202,4 +225,3 @@ public class ContactsFragment extends Fragment implements AdapterView.OnItemClic
         listView.setAdapter(objAdapter);
     }
 }
-
